@@ -728,7 +728,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH RESPONSIVE ====================== -->
     <section class="hero-scroll-container" id="video-scroll-section">
       <div class="sticky-viewport">
-        <!-- Imagen inicial por defecto -->
+        <!-- Imagen inicial por defecto (se ajustará por JS) -->
         <img id="scroll-video-frame" src="frames/frame_001.png" alt="Animación Scroll 3D" />
       </div>
     </section>
@@ -1025,11 +1025,17 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <!-- LÓGICA DE CONTROL FLUIDO (MOUSE + TÁCTIL) PARA EL HERO VIDEO SCROLL -->
+  <!-- LÓGICA DE CONTROL FLUIDO (ADAPTATIVA: COMPUTADORA -> frames / CELULAR-TABLET -> img) -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const totalFrames = 55;
       const frameImage = document.getElementById('scroll-video-frame');
+      
+      // Detectar si es dispositivo móvil o tablet por ancho de pantalla (<= 768px)
+      const isMobile = window.innerWidth <= 768;
+      
+      // Configurar carpeta y total de fotogramas según el dispositivo
+      const folder = isMobile ? 'img' : 'frames';
+      const totalFrames = isMobile ? 55 : 55; // Modifica aquí si tu carpeta 'img' tiene otra cantidad de imágenes
       
       const obj = { frame: 0 };
       const frames = [];
@@ -1037,8 +1043,13 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
       for (let i = 1; i <= totalFrames; i++) {
         const img = new Image();
         const paddedIndex = String(i).padStart(3, '0');
-        img.src = `frames/frame_${paddedIndex}.png`;
+        img.src = `${folder}/frame_${paddedIndex}.png`;
         frames.push(img);
+      }
+
+      // Asignar primera imagen inicial de forma segura
+      if (frames[0] && frames[0].src) {
+        frameImage.src = frames[0].src;
       }
 
       gsap.registerPlugin(ScrollTrigger);

@@ -11,7 +11,7 @@
 <meta name="geo.placename" content="Ecuador">
 <meta name="language" content="Spanish">
 
-  <link rel="canonical" href="https://techmants.blog/">
+  <link rel="canonical" href="https://techmants.github.io/web3d/">
 
   <meta name="theme-color" content="#0d0d0d" />
   <!-- ✅ Favicon -->
@@ -22,7 +22,7 @@
 <meta property="og:title" content="TechmanTS Ecuador - Streaming Premium">
 <meta property="og:description" content="Compra Netflix, Disney+, IPTV y más con activación rápida en Ecuador.">
 <meta property="og:image" content="https://i.imgur.com/f2J3Eqn.jpeg">
-<meta property="og:url" content="https://techmants.blog">
+<meta property="og:url" content="https://techmants.github.io/web3d/">
 <meta property="og:type" content="website">
 
   <!-- Font Awesome -->
@@ -591,7 +591,7 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "TechmanTS",
-  "url": "https://techmants.blog",
+  "url": "https://techmants.github.io/web3d/",
   "logo": "https://i.imgur.com/f2J3Eqn.jpeg",
   "sameAs": [
     "https://www.facebook.com/profile.php?id=100076078974973",
@@ -662,11 +662,10 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
         fb.style.display = "none";
         fb.setAttribute("aria-hidden", "true");
       }
-      
-      const home = document.getElementById('view-home');
-      const planes = document.getElementById('view-planes');
-      if (home) home.style.display = 'block';
-      if (planes) planes.style.display = 'none';
+
+      if (location.hash !== "") {
+        history.pushState(null, "", "./");
+      }
     }
 
     function handleHashChange() {
@@ -696,8 +695,8 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH ====================== -->
     <section class="hero-scroll-container" id="video-scroll-section">
       <div class="sticky-viewport">
-        <!-- Imagen inicial por defecto corregida para mostrar la sección uno sin errores -->
-        <img id="scroll-video-frame" src="web3D/frames/frame_001.png" alt="Animación Scroll 3D" />
+        <!-- Imagen inicial por defecto -->
+        <img id="scroll-video-frame" src="frames/frame_001.png" alt="Animación Scroll 3D" />
       </div>
     </section>
 
@@ -1007,10 +1006,6 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
         const paddedIndex = String(i).padStart(3, '0');
         img.src = `frames/frame_${paddedIndex}.png`;
         frames.push(img);
-      }
-
-      if (frames[0] && frames[0].src) {
-        frameImage.src = frames[0].src;
       }
 
       gsap.registerPlugin(ScrollTrigger);
@@ -1363,7 +1358,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
       $('#view-planes').style.display='none';
       $('#view-flipbook').style.display='none';
       document.body.scrollTop = document.documentElement.scrollTop = 0;
-      history.pushState({}, "", "/");
+      history.pushState({}, "", "./");
     }
 
     function goToPlans(slug) {

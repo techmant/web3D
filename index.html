@@ -49,55 +49,44 @@
     a{color:inherit;text-decoration:none}
     button{font:inherit}
 
-    /* =============== Layout / Menú Responsive =============== */
-    header{position:fixed;inset-inline:0;top:0;z-index:50;background:linear-gradient(180deg,rgba(13,13,13,.92),rgba(13,13,13,.75),rgba(13,13,13,.4));backdrop-filter:saturate(150%) blur(8px)}
-    .nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;flex-wrap:wrap;}
+    /* =============== Layout =============== */
+    header{position:fixed;inset-inline:0;top:0;z-index:50;background:linear-gradient(180deg,rgba(13,13,13,.82),rgba(13,13,13,.35),transparent);backdrop-filter:saturate(150%) blur(6px)}
+    .nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;gap:12px;padding:14px 18px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
-    .brand .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--accent),#ff6,transparent 70%);box-shadow:var(--shadow)}
-    
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .brand .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--accent),#ff6,transparent 70%) box-shadow(var(--shadow))}
+    .spacer{flex:1}
+    .nav a.btn, .nav button.btn{white-space:nowrap}
 
-    .nav-right-actions {
+    /* Estilos responsive para el menú de navegación en móviles y tablets */
+    .nav-links {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     @media(max-width: 768px) {
       .nav {
         padding: 10px 12px;
+        gap: 6px;
       }
       .nav-links {
-        width: 100%;
-        justify-content: center;
-        order: 3;
-        margin-top: 4px;
         gap: 4px;
       }
-      .nav-links .btn.ghost {
+      .nav-links .btn {
         padding: 6px 10px;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
+      }
+      .nav-links .hide-mobile {
+        display: none;
       }
     }
 
     main{display:block}
     
-    /* Contenedor principal de la sección Hero optimizado para scroll y touch (Responsive) */
+    /* Contenedor principal de la sección Hero optimizado para scroll y touch con mayor altura para transiciones fluidas */
     .hero-scroll-container {
       position: relative;
-      height: 400vh; /* Ajustado para mejor fluidez en celulares y tablets */
+      height: 600vh; /* Aumentado para dar mayor holgura al scroll y evitar que la sección 2 se monte rápido */
       background-color: var(--bg);
-    }
-    
-    @media (max-width: 768px) {
-      .hero-scroll-container {
-        height: 300vh;
-      }
     }
 
     .sticky-viewport {
@@ -106,18 +95,35 @@
       height: 100vh;
       width: 100%;
       overflow: hidden;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     #scroll-video-frame {
-      position: absolute;
-      inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Asegura que el frame cubra toda la pantalla de manera adaptativa */
+      object-fit: cover;
       z-index: 0;
       filter: brightness(0.75);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Corrección estricta para móviles y tablets: imágenes de frames más pequeñas y perfectamente centradas */
+    @media (max-width: 1024px) {
+      .sticky-viewport {
+        padding: 20px;
+      }
+      #scroll-video-frame {
+        width: 85% !important;
+        max-width: 420px !important;
+        height: auto !important;
+        max-height: 75vh !important;
+        object-fit: contain !important;
+        margin: auto !important;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      }
     }
 
     .hero-scroll-container .content {
@@ -140,7 +146,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      margin-top: -100vh;
+      margin-top: 0; /* Ajustado para que no se superponga de golpe */
       z-index: 2;
     }
     
@@ -168,8 +174,6 @@
       z-index: 2;
       text-align: center;
       text-shadow: 0 6px 20px rgba(0,0,0,.6);
-      width: 100%;
-      padding: 0 16px;
     }
 
     /* Animated Title */
@@ -635,24 +639,23 @@
 Comprar Netflix Premium Ecuador | TechmanTS Streaming
 </h1>
 
-  <!-- Header con carrito y menú responsive adaptado -->
+  <!-- Header con carrito y nuevos enlaces de menú -->
   <header>
     <nav class="nav">
       <div class="brand" onclick="goHome()" style="cursor:pointer">
         <div class="dot"></div>
       </div>
+      <div class="spacer"></div>
       <div class="nav-links">
         <button class="btn ghost" onclick="goHome()">Inicio</button>
-        <a href="#garantia" class="btn ghost">Garantía</a>
-        <a href="#servicios" class="btn ghost">Servicios</a>
-        <a href="#testimonios" class="btn ghost">Testimonios</a>
+        <a href="#garantia" class="btn ghost hide-mobile">Garantía</a>
+        <a href="#servicios" class="btn ghost hide-mobile">Servicios</a>
+        <a href="#testimonios" class="btn ghost hide-mobile">Testimonios</a>
       </div>
-      <div class="nav-right-actions">
-        <button class="btn ghost" onclick="openCart()" style="position:relative;">
-          <i class="fas fa-shopping-cart"></i>
-          <span id="cart-badge">0</span>
-        </button>
-      </div>
+      <button class="btn ghost" onclick="openCart()" style="position:relative;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-badge">0</span>
+      </button>
     </nav>
   </header>
   
@@ -717,7 +720,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
   
   <!-- ====================== VISTA: HOME ====================== -->
   <main id="view-home">
-    <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH RESPONSIVE ====================== -->
+    <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH ====================== -->
     <section class="hero-scroll-container" id="video-scroll-section">
       <div class="sticky-viewport">
         <!-- Imagen inicial por defecto -->
@@ -1043,7 +1046,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
           trigger: "#video-scroll-section",
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5,
+          scrub: 1, /* Incrementado a 1 para hacer la transición mucho más suave y evitar cortes bruscos */
           invalidateOnRefresh: true
         },
         onUpdate: () => {

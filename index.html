@@ -50,70 +50,42 @@
     button{font:inherit}
 
     /* =============== Layout =============== */
-    header{position:fixed;inset-inline:0;top:0;z-index:50;background:linear-gradient(180deg,rgba(13,13,13,.95),rgba(13,13,13,.8),transparent);backdrop-filter:saturate(150%) blur(8px)}
-    .nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px}
+    header{position:fixed;inset-inline:0;top:0;z-index:50;background:linear-gradient(180deg,rgba(13,13,13,.82),rgba(13,13,13,.35),transparent);backdrop-filter:saturate(150%) blur(6px)}
+    .nav{max-width:var(--maxw);margin:auto;display:flex;align-items:center;gap:12px;padding:14px 18px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
-    .brand .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--accent),#ff6,transparent 70%);box-shadow:var(--shadow)}
-    
-    /* Menú de navegación responsive corregido (Escritorio, Tablet y Celular) */
+    .brand .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--accent),#ff6,transparent 70%) box-shadow(var(--shadow))}
+    .spacer{flex:1}
+    .nav a.btn, .nav button.btn{white-space:nowrap}
+
+    /* Estilos responsive para el menú de navegación en móviles y tablets */
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-
-    /* Botón de menú hamburguesa para móviles y tablets */
-    .menu-toggle {
-      display: none;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 1.2rem;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    @media(max-width: 900px) {
-      .menu-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    @media(max-width: 768px) {
+      .nav {
+        padding: 10px 12px;
+        gap: 6px;
       }
       .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(13, 13, 13, 0.98);
-        backdrop-filter: blur(10px);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 16px;
-        gap: 10px;
-        border-bottom: 1px solid var(--border);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.6);
-        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-        visibility: hidden;
-        transition: clip-path 0.3s ease-in-out, visibility 0.3s ease-in-out;
-      }
-      .nav-links.active {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        visibility: visible;
+        gap: 4px;
       }
       .nav-links .btn {
-        width: 100%;
-        justify-content: flex-start;
-        padding: 10px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      .nav-links .hide-mobile {
+        display: none;
       }
     }
 
     main{display:block}
     
-    /* Contenedor principal de la sección Hero optimizado para scroll y touch */
+    /* Contenedor principal de la sección Hero optimizado para scroll y touch con mayor altura para transiciones fluidas */
     .hero-scroll-container {
       position: relative;
-      height: 600vh;
+      height: 600vh; /* Aumentado para dar mayor holgura al scroll y evitar que la sección 2 se monte rápido */
       background-color: var(--bg);
     }
 
@@ -121,13 +93,11 @@
       position: sticky;
       top: 0;
       height: 100vh;
-      width: 100vw;
+      width: 100%;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0;
-      padding: 0;
     }
 
     #scroll-video-frame {
@@ -135,25 +105,24 @@
       height: 100%;
       object-fit: cover;
       z-index: 0;
-      filter: brightness(0.85);
+      filter: brightness(0.75);
       transition: transform 0.1s ease-out;
     }
 
+    /* Corrección estricta para móviles y tablets: imágenes de frames más pequeñas y perfectamente centradas */
     @media (max-width: 1024px) {
       .sticky-viewport {
-        padding: 0 !important;
-        width: 100vw !important;
-        height: 100dvh !important;
+        padding: 20px;
       }
       #scroll-video-frame {
-        width: 100vw !important;
-        max-width: none !important;
-        height: 100dvh !important;
-        max-height: none !important;
-        object-fit: cover !important;
-        margin: 0 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
+        width: 85% !important;
+        max-width: 420px !important;
+        height: auto !important;
+        max-height: 75vh !important;
+        object-fit: contain !important;
+        margin: auto !important;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       }
     }
 
@@ -165,10 +134,8 @@
       padding: 0 20px;
     }
 
-    /* SECCIÓN DOS CON EFECTO STICKY / MONTURA SOBRE SECCIÓN UNO */
     section.hero {
-      position: sticky;
-      top: 0;
+      position: relative;
       height: 92dvh;
       min-height: 92svh;
       display: grid;
@@ -179,9 +146,8 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      margin-top: 0;
-      z-index: 3;
-      box-shadow: 0 -15px 30px rgba(0,0,0,0.5);
+      margin-top: 0; /* Ajustado para que no se superponga de golpe */
+      z-index: 2;
     }
     
     section.hero .bg {
@@ -211,11 +177,12 @@
     }
 
     /* Animated Title */
-    .disney-text{position:relative;display:flex;justify-content:center;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:900;text-transform:uppercase;white-space:nowrap;letter-spacing:1px;margin-bottom:10px}
+    .disney-text{position:relative;display:flex;justify-content:center;font-size:clamp(2.2rem,7.5vw,5rem);font-weight:900;text-transform:uppercase;white-space:nowrap;letter-spacing:1px;margin-bottom:10px}
     .disney-text span{opacity:0;text-shadow:0 0 .3vw #fff,0 0 .6vw var(--accent),0 0 1vw var(--accent);animation:appear 3s infinite}
     @keyframes appear{0%{opacity:0;transform:translateY(-1.5vw)}20%{opacity:1;transform:translateY(0)}60%{opacity:1}80%{opacity:.5}100%{opacity:0}}
+    .disney-text span:nth-child(1){animation-delay:0s}.disney-text span:nth-child(2){animation-delay:.25s}.disney-text span:nth-child(3){animation-delay:.5s}.disney-text span:nth-child(4){animation-delay:.75s}.disney-text span:nth-child(5){animation-delay:1s}.disney-text span:nth-child(6){animation-delay:1.25s}.disney-text span:nth-child(7){animation-delay:1.5s}.disney-text span:nth-child(8){animation-delay:1.75s}.disney-text span:nth-child(9){animation-delay:2s}
 
-    .tagline{font-size:clamp(0.95rem,3vw,1.15rem);line-height:1.55;max-width:900px;margin:6px auto 0;padding:0 16px}
+    .tagline{font-size:clamp(1.05rem,3.6vw,1.3rem);line-height:1.55;max-width:900px;margin:6px auto 0;padding:0 16px}
     .dynamic{color:var(--primary);font-weight:800;animation:glow 3s ease-in-out infinite}
     @keyframes glow{0%{text-shadow:0 0 6px rgba(0,212,255,.35)}50%{text-shadow:0 0 20px rgba(0,212,255,.8),0 0 30px rgba(255,200,0,.55)}100%{text-shadow:0 0 6px rgba(0,212,255,.35)}}
 
@@ -227,13 +194,6 @@
     .logo-card:nth-child(2){animation:slideAndScale 8s ease-in-out infinite 2s}
     .logo-card:nth-child(3){animation:slideAndScale 8s ease-in-out infinite 4s}
     .logo-card:nth-child(4){animation:slideAndScale 8s ease-in-out infinite 6s}
-
-    /* Contenedor posterior a la sección hero sticky para restaurar flujo normal en servicios con efecto sticky individual opcional o superposición */
-    #servicios {
-      position: relative;
-      z-index: 4;
-      background: var(--bg);
-    }
 
     /* =============== Grid de Servicios =============== */
     .wrap{max-width:var(--maxw);margin:0 auto;padding:36px 18px}
@@ -285,8 +245,21 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(0,0,0,0.25);
       border-color: rgba(255,255,255,0.06);
     }
+    .plan:hover .head { box-shadow: 0 0 24px calc(1px + 0px) var(--accent-color, #00d4ff); border-color: var(--accent-color, #00d4ff); }
+    .plan::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: box-shadow .28s ease;
+    }
+    .plan:hover::after {
+      box-shadow: 0 0 40px 8px rgba(0,0,0,0.0), 0 0 32px 2px rgba(255,255,255,0.02), 0 0 28px 2px var(--accent-color, #00d4ff);
+    }
 
-    footer{position:relative; z-index:5; border-top:1px solid var(--border);background:#0b0d11;color:#a9b3c2}
+    footer{border-top:1px solid var(--border);background:#0b0d11;color:#a9b3c2}
     footer .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
 
     /* Hide scrollbars */
@@ -386,7 +359,7 @@
       font-size: 0.95rem;
     }
 
-    /* ====== EFECTOS 3D RESTAURADOS EN TARJETAS (MOUSE Y TOUCH) ====== */
+    /* ====== NUEVO EFECTO RELIEVE TARJETAS ====== */
     .card-container {
       position: relative;
       width: 100%;
@@ -400,7 +373,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+      transition: all 0.5s ease;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
@@ -408,36 +381,18 @@
       z-index: 1;
       cursor: pointer;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
-      display: block;
-      transform-style: preserve-3d;
+      display:block;
     }
 
-    /* Efecto de inclinación hacia atrás y zoom en hover / touch */
     @media (hover: hover) and (pointer: fine) {
       .wrapper:hover {
-        transform: perspective(900px) translateY(-6%) rotateX(15deg);
+        transform: perspective(900px) translateY(-6%) rotateX(20deg);
         box-shadow: 0 40px 60px rgba(0, 0, 0, 0.75);
       }
       .wrapper:hover .background {
         transform: scale(1.06);
-        filter: brightness(0.95) contrast(1.05);
+        filter:brightness(0.95) contrast(1.05);
       }
-      .wrapper:hover ~ .character,
-      .wrapper:focus ~ .character {
-        transform: translateX(calc(-50% + var(--follow-x, 0px))) scale(1.35) translateY(-36px);
-      }
-    }
-
-    .wrapper.touched {
-      transform: perspective(900px) translateY(-6%) rotateX(15deg);
-      box-shadow: 0 40px 60px rgba(0, 0, 0, 0.75);
-    }
-    .wrapper.touched .background {
-      transform: scale(1.06);
-      filter: brightness(0.95) contrast(1.05);
-    }
-    .wrapper.touched ~ .character {
-      transform: translateX(calc(-50% + var(--follow-x, 0px))) scale(1.35) translateY(-36px);
     }
 
     .background {
@@ -462,6 +417,52 @@
       z-index: 6;
       pointer-events: none;
       filter: drop-shadow(0 25px 40px rgba(0,0,0,0.6));
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .wrapper:hover ~ .character,
+      .wrapper:focus ~ .character {
+        transform: translateX(calc(-50% + var(--follow-x, 0px))) scale(1.35) translateY(-36px);
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .character {
+        width: 42%;
+        bottom: 60px;
+        transition: transform 0.2s cubic-bezier(0,0,0.2,1), filter 0.55s ease !important;
+      }
+
+      .wrapper:active,
+      .wrapper.touched {
+        transform: perspective(900px) translateY(-6%) rotateX(20deg) !important;
+        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.75) !important;
+      }
+
+      .wrapper:active .background,
+      .wrapper.touched .background {
+        transform: scale(1.06) !important;
+        filter: brightness(0.95) contrast(1.05) !important;
+      }
+
+      .wrapper:active ~ .character,
+      .wrapper.touched ~ .character {
+        transform: translateX(calc(-50% + var(--follow-x, 0px))) scale(1.35) translateY(-36px) !important;
+      }
+
+      .wrapper:focus {
+        transform: perspective(900px) translateY(-6%) rotateX(20deg) !important;
+        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.75) !important;
+      }
+
+      .wrapper:focus .background {
+        transform: scale(1.06) !important;
+        filter: brightness(0.95) contrast(1.05) !important;
+      }
+
+      .wrapper:focus ~ .character {
+        transform: translateX(calc(-50% + var(--follow-x, 0px))) scale(1.35) translateY(-36px) !important;
+      }
     }
 
    .platform-logo {
@@ -579,6 +580,24 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
 
+    .btn-back-to-top i {
+      transition: transform 0.2s ease;
+    }
+
+    .btn-back-to-top:hover i {
+      transform: translateY(-2px);
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .card-container {
+        animation: subtleFloat 3s ease-in-out infinite;
+      }
+      @keyframes subtleFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-4px); }
+      }
+    }
+
     * {
       -webkit-tap-highlight-color: transparent;
     }
@@ -586,6 +605,12 @@
     a, button, .btn, .btn-ver-planes, .wrapper, .floating-btn {
       -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      a, button, .btn, .btn-ver-planes, .wrapper, .floating-btn {
+        outline: none;
+      }
     }
   </style>
 
@@ -614,20 +639,18 @@
 Comprar Netflix Premium Ecuador | TechmanTS Streaming
 </h1>
 
-  <!-- Header con carrito, botón hamburguesa y enlaces de menú responsive -->
+  <!-- Header con carrito y nuevos enlaces de menú -->
   <header>
     <nav class="nav">
       <div class="brand" onclick="goHome()" style="cursor:pointer">
         <div class="dot"></div>
       </div>
-      <button class="menu-toggle" onclick="toggleNavMenu()" aria-label="Abrir menú">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="nav-links" id="navLinks">
-        <button class="btn ghost" onclick="goHome(); toggleNavMenu(true);">Inicio</button>
-        <a href="#garantia" class="btn ghost" onclick="toggleNavMenu(true);">Garantía</a>
-        <a href="#servicios" class="btn ghost" onclick="toggleNavMenu(true);">Servicios</a>
-        <a href="#testimonios" class="btn ghost" onclick="toggleNavMenu(true);">Testimonios</a>
+      <div class="spacer"></div>
+      <div class="nav-links">
+        <button class="btn ghost" onclick="goHome()">Inicio</button>
+        <a href="#garantia" class="btn ghost hide-mobile">Garantía</a>
+        <a href="#servicios" class="btn ghost hide-mobile">Servicios</a>
+        <a href="#testimonios" class="btn ghost hide-mobile">Testimonios</a>
       </div>
       <button class="btn ghost" onclick="openCart()" style="position:relative;">
         <i class="fas fa-shopping-cart"></i>
@@ -637,16 +660,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
   </header>
   
 <script>
-    function toggleNavMenu(forceClose = false) {
-      const navLinks = document.getElementById('navLinks');
-      if (forceClose) {
-        navLinks.classList.remove('active');
-      } else {
-        navLinks.classList.toggle('active');
-      }
-    }
-
-    function showFlipbookView() {
+ function showFlipbookView() {
       document.querySelectorAll("main").forEach(v => {
         v.style.display = "none";
         v.setAttribute("aria-hidden", "true");
@@ -706,15 +720,17 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
   
   <!-- ====================== VISTA: HOME ====================== -->
   <main id="view-home">
-    <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH (A PANTALLA COMPLETA) ====================== -->
+    <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH ====================== -->
     <section class="hero-scroll-container" id="video-scroll-section">
       <div class="sticky-viewport">
-        <!-- Imagen inicial por defecto a pantalla completa -->
+        <!-- Imagen inicial por defecto -->
         <img id="scroll-video-frame" src="frames/frame_001.png" alt="Animación Scroll 3D" />
       </div>
     </section>
 
-    <section class="hero" id="garantia">
+    
+
+    <section class="hero" id="garantia" style="height:92dvh;min-height:92svh">
       <div class="bg" style="background-image:url('https://i.imgur.com/c6PlNqn.png')"></div>
       <div class="shade"></div>
       <div class="content">
@@ -724,7 +740,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
           <div class="logo-card"><img src="https://i.imgur.com/lSFofbO.png" alt="Disney+ Ecuador TechmanTS Streaming"/></div>
           <div class="logo-card"><img src="https://i.imgur.com/YmDnl46.png" alt="Crunchyroll Ecuador TechmanTS Streaming"/></div>
         </div>
-        <p class="muted tagline">Plataformas originales con diferentes planes y duraciones. Paga fácil y recibe soporte rápido y confiable.</p>
+        <p class="muted" style="max-width:800px;margin:12px auto 0;padding:0 16px">Plataformas originales con diferentes planes y duraciones. Paga fácil y recibe soporte rápido y confiable.</p>
       </div>
     </section>
 
@@ -937,7 +953,6 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
       margin: 0;
       padding: 0;
       pointer-events: none;
-      z-index: 9998;
     }
     .social-menu li {
       position: absolute;
@@ -1031,7 +1046,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
           trigger: "#video-scroll-section",
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
+          scrub: 1, /* Incrementado a 1 para hacer la transición mucho más suave y evitar cortes bruscos */
           invalidateOnRefresh: true
         },
         onUpdate: () => {
@@ -1557,7 +1572,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
             const moveX = (percentage - 0.5) * 50; 
             character.style.setProperty('--follow-x', `${moveX}px`);
           } else {
-            character.style.setProperty('--follow-x`, `0px`);
+            character.style.setProperty('--follow-x', `0px`);
           }
         });
       });
@@ -1581,7 +1596,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
             character.style.setProperty('--follow-x', `${moveX}px`);
           } else {
             wrapper.classList.remove('touched');
-            character.style.setProperty('--follow-x`, `0px`);
+            character.style.setProperty('--follow-x', `0px`);
           }
         });
       }, { passive: true });

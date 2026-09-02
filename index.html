@@ -88,7 +88,7 @@
         background: rgba(13, 13, 13, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
         padding: 16px;
         gap: 10px;
         border-bottom: 1px solid var(--border);
@@ -103,7 +103,7 @@
       }
       .nav-links .btn {
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
         padding: 10px;
       }
     }
@@ -228,7 +228,7 @@
     .logo-card:nth-child(3){animation:slideAndScale 8s ease-in-out infinite 4s}
     .logo-card:nth-child(4){animation:slideAndScale 8s ease-in-out infinite 6s}
 
-    /* Contenedor posterior a la sección hero sticky para restaurar flujo normal en servicios */
+    /* Contenedor posterior a la sección hero sticky para restaurar flujo normal en servicios con efecto sticky individual opcional o superposición */
     #servicios {
       position: relative;
       z-index: 4;
@@ -1557,7 +1557,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
             const moveX = (percentage - 0.5) * 50; 
             character.style.setProperty('--follow-x', `${moveX}px`);
           } else {
-            character.style.setProperty('--follow-x', `0px`);
+            character.style.setProperty('--follow-x`, `0px`);
           }
         });
       });
@@ -1581,7 +1581,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
             character.style.setProperty('--follow-x', `${moveX}px`);
           } else {
             wrapper.classList.remove('touched');
-            character.style.setProperty('--follow-x', `0px`);
+            character.style.setProperty('--follow-x`, `0px`);
           }
         });
       }, { passive: true });

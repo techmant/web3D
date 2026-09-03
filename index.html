@@ -89,22 +89,18 @@
     
     /* Contenedor principal de la sección Hero optimizado para scroll y touch (Responsive con mayor altura para mejor fluidez) */
     .hero-scroll-container {
-      position: relative;
-      height: 1500vh; /* Ampliado para portates y PC para que la animación no se tape prematuramente */
-      background-color: var(--bg);
-    }
-    
-    @media (max-width: 1024px) {
-      .hero-scroll-container {
-        height: 400vh;
-      }
-    }
+  position: relative;
+  height: 1200vh; /* Ajustado para escritorio */
+  background-color: var(--bg);
+}
 
-    @media (max-width: 768px) {
-      .hero-scroll-container {
-        height: 1000vh;
-      }
-    }
+@media (max-width: 1024px) {
+  .hero-scroll-container { height: 800vh; } /* Ajustado para tablets */
+}
+
+@media (max-width: 768px) {
+  .hero-scroll-container { height: 600vh; } /* Ajustado para celulares (evita el salto y el negro) */
+}
 
     .sticky-viewport {
       position: sticky;
@@ -1655,20 +1651,16 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     const imgElement = document.getElementById('scroll-video-frame');
     const container = document.getElementById('video-scroll-section');
 
-    // 1. Detección automática de dispositivo móvil/tablet vs computadora
     const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
-    // 2. Selección de carpeta y relación de aspecto automática:
-    // - Computadora -> carpeta 'frames/' (Horizontal 16:9)
-    // - Celular/Tablet -> carpeta 'img/' (Vertical 9:16)
+    // Configuración automática de carpeta y cantidad exacta de frames
     const folderName = isMobileOrTablet ? 'img' : 'frames';
-    const totalFrames = 100; // Ajusta este número según el total exacto de imágenes en tus carpetas
+    const totalFrames = isMobileOrTablet ? 44 : 52; 
 
     function padZero(num) {
       return String(num).padStart(3, '0');
     }
 
-    // Carga inicial del primer frame
     let currentFrameIndex = 1;
     imgElement.src = `${folderName}/frame_${padZero(1)}.png`;
 
@@ -1679,28 +1671,23 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
       imgElement.src = `${folderName}/frame_${padZero(currentFrameIndex)}.png`;
     }
 
-    // 3. Control por Touch / Arrastre vertical específico para Celulares y Tablets
-    if (isMobileOrTablet) {
-      let touchStartY = 0;
-      container.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-
-      container.addEventListener('touchmove', (e) => {
-        const scrollPercent = Math.max(0, Math.min(1, window.scrollY / (container.offsetHeight - window.innerHeight)));
-        const frameIndex = Math.floor(scrollPercent * (totalFrames - 1)) + 1;
-        updateImage(frameIndex);
-      }, { passive: true });
-    }
-
-    // 4. Control general por desplazamiento de scroll (Funciona en todos los dispositivos)
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const maxScroll = container.offsetHeight - window.innerHeight;
-      if (maxScroll <= 0) return;
-      const scrollFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
-      const frameIndex = Math.floor(scrollFraction * (totalFrames - 1)) + 1;
-      updateImage(frameIndex);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const containerTop = container.offsetTop;
+          const maxScroll = container.offsetHeight - window.innerHeight;
+
+          if (maxScroll > 0) {
+            const scrollFraction = Math.max(0, Math.min(1, (scrollTop - containerTop) / maxScroll));
+            const frameIndex = Math.min(totalFrames, Math.floor(scrollFraction * totalFrames) + 1);
+            updateImage(frameIndex);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     }, { passive: true });
   })();
 </script>

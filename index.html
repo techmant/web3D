@@ -726,13 +726,12 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
   <!-- ====================== VISTA: HOME ======================. -->
   <main id="view-home">
     <!-- ====================== SECCIÓN HERO CON EFECTO SCROLL / TOUCH RESPONSIVE ====================== -->
-    <section class="hero-scroll-container" id="video-scroll-section">
-      <div class="sticky-viewport">
-        <!-- Imagen inicial por defecto (se ajustará por JS) -->
-        <img id="scroll-video-frame" src="frames/frame_001.png" alt="Animación Scroll 3D" />
-      </div>
-    </section>
-
+   <!-- Reemplaza tu contenedor actual de la sección 3D por este -->
+<section class="hero-scroll-container" id="video-scroll-section">
+  <div class="sticky-viewport">
+    <img id="scroll-video-frame" alt="Animación 3D Automática" />
+  </div>
+</section>
     
 
     <section class="hero" id="garantia" style="height:92dvh;min-height:92svh">
@@ -1650,5 +1649,61 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     <h2>Streaming Ecuador</h2>
     <p>Venta de servicios streaming digitales en Ecuador TechmanTS.</p>
   </section>
+
+<script>
+  (function() {
+    const imgElement = document.getElementById('scroll-video-frame');
+    const container = document.getElementById('video-scroll-section');
+
+    // 1. Detección automática de dispositivo móvil/tablet vs computadora
+    const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+    // 2. Selección de carpeta y relación de aspecto automática:
+    // - Computadora -> carpeta 'frames/' (Horizontal 16:9)
+    // - Celular/Tablet -> carpeta 'img/' (Vertical 9:16)
+    const folderName = isMobileOrTablet ? 'img' : 'frames';
+    const totalFrames = 100; // Ajusta este número según el total exacto de imágenes en tus carpetas
+
+    function padZero(num) {
+      return String(num).padStart(3, '0');
+    }
+
+    // Carga inicial del primer frame
+    let currentFrameIndex = 1;
+    imgElement.src = `${folderName}/frame_${padZero(1)}.png`;
+
+    function updateImage(index) {
+      if (index < 1) index = 1;
+      if (index > totalFrames) index = totalFrames;
+      currentFrameIndex = index;
+      imgElement.src = `${folderName}/frame_${padZero(currentFrameIndex)}.png`;
+    }
+
+    // 3. Control por Touch / Arrastre vertical específico para Celulares y Tablets
+    if (isMobileOrTablet) {
+      let touchStartY = 0;
+      container.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      container.addEventListener('touchmove', (e) => {
+        const scrollPercent = Math.max(0, Math.min(1, window.scrollY / (container.offsetHeight - window.innerHeight)));
+        const frameIndex = Math.floor(scrollPercent * (totalFrames - 1)) + 1;
+        updateImage(frameIndex);
+      }, { passive: true });
+    }
+
+    // 4. Control general por desplazamiento de scroll (Funciona en todos los dispositivos)
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = container.offsetHeight - window.innerHeight;
+      if (maxScroll <= 0) return;
+      const scrollFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
+      const frameIndex = Math.floor(scrollFraction * (totalFrames - 1)) + 1;
+      updateImage(frameIndex);
+    }, { passive: true });
+  })();
+</script>
+  
 </body>
 </html>

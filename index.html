@@ -717,10 +717,6 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     window.addEventListener("DOMContentLoaded", handleHashChange);
     window.addEventListener("hashchange", handleHashChange);
 
-  const iframe = document.querySelector('#view-flipbook iframe');
-  if (iframe && !iframe.src) {
-    iframe.src = "https://heyzine.com/flip-book/bc9be83d9b.html";
-  }
 </script>
   
   <!-- ====================== VISTA: HOME ======================. -->
@@ -877,7 +873,7 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
 
   <!-- ====================== VISTA: FLIPBOOK ====================== -->
   <main id="view-flipbook" aria-hidden="true" style="display:none;">
-    <div class="hero-mini" style="--hero-img:url('https://www.ville-foulayronnes.fr/medias/2022/12/Bandeau-Noel-1.jpg')">
+    <div class="hero-mini" style="--hero-img:linear-gradient(135deg,#111827,#0b0e13)">
       <div class="wrap">
         <div>
           <div class="pill">Promo Navidad</div>
@@ -892,12 +888,9 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     </div>
 
     <section class="wrap" style="padding:20px 0;">
-      <iframe 
-        allowfullscreen="allowfullscreen"
-        allow="clipboard-write"
-        src="https://heyzine.com/flip-book/bc9be83d9b.html"
-        style="border:0;width:100%;height:80vh;border-radius:12px;">
-      </iframe>
+      <div class="pill" style="justify-content:center;width:max-content;margin:0 auto;">
+        Catálogo temporalmente no disponible
+      </div>
     </section>
   </main>
 
@@ -1009,10 +1002,10 @@ Comprar Netflix Premium Ecuador | TechmanTS Streaming
     <img src="https://i.imgur.com/IW1zcSx.jpeg" alt="Menú TechmanTS" class="floating-btn-img" />
   </div>
   <ul class="social-menu" id="socialMenu">
-    <li><a href="https://www.facebook.com/profile.php?id=100076078974973" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-    <li><a href="https://www.tiktok.com/@techmants?_t=8jYTw3aqdPS&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a></li>
-    <li><a href="https://wa.me/593993365409" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-    <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+    <li><a href="https://www.facebook.com/profile.php?id=100076078974973" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a></li>
+    <li><a href="https://www.tiktok.com/@techmants?_t=8jYTw3aqdPS&_r=1" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a></li>
+    <li><a href="https://wa.me/593993365409" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a></li>
+    <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a></li>
   </ul>
 
   <script>
